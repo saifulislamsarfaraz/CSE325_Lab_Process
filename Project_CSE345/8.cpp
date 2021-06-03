@@ -94,7 +94,7 @@ void * customer(void * arg)
     cnt++;
     shop.push(cnt);//Enter all customer
 
-    sem_wait(&empty2);
+    sem_wait(&empty2); //Customer waits for seat on sofa
     sleep(1);
     pthread_mutex_lock(&lock1);
     int push_sofa=shop.front();
@@ -104,11 +104,11 @@ void * customer(void * arg)
     printf("Customer seat sofa %d\n",push_sofa);
     pthread_mutex_unlock(&lock1);
     sleep(1);
-    sem_wait(&empty3);
+    sem_wait(&empty3); //Customer waits for chair 
     pthread_mutex_lock(&lock2);
     int push_chair=sofa.front();
     printf("Get up from sofa %d\n",push_chair);
-    chair.push(push_chair);
+    chair.push(push_chair);// push customer in chair 
     sofa.pop();
     pthread_mutex_unlock(&lock2);
     sleep(1);
