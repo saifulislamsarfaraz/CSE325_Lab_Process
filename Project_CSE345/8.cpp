@@ -45,13 +45,13 @@ In other words, the following synchronization constraints apply:
  The barber must accept payment before the customer can exit shop.
 
 Write code that enforces the synchronization constraints for Hilzer’s barbershop.*/
-sem_t empty1;
-sem_t empty2;
-sem_t empty3;
-sem_t barber_ready;
-sem_t finished;
-sem_t payment;
-sem_t receipt;
+sem_t empty1; //using for shop
+sem_t empty2; //using for sofa
+sem_t empty3; //using for chair
+sem_t barber_ready; // using for barber ready to hair cut
+sem_t finished; // using haircut is complete
+sem_t payment; // Customer pay bill
+sem_t receipt; //receipt for payment
 queue<int> shop;
 queue<int> sofa;
 queue<int> chair;
@@ -122,14 +122,11 @@ void * customer(void * arg)
 
 
     sem_wait(&finished);
-
     pthread_mutex_lock(&lock5);
-
     take_payment=paymnt.front();
     paymnt.pop();
     printf("make payment %d\n",take_payment);
     sem_post(&payment);
-
     sem_wait(&receipt);
     printf("Exit from shop %d\n",take_payment);
     pthread_mutex_unlock(&lock5);
