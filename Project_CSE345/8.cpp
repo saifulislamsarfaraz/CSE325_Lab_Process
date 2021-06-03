@@ -52,11 +52,13 @@ sem_t barber_ready; // using for barber ready to hair cut
 sem_t finished; // using haircut is complete
 sem_t payment; // Customer pay bill
 sem_t receipt; //receipt for payment
-queue<int> shop;
-queue<int> sofa;
-queue<int> chair;
-queue<int> barbr;
-queue<int> paymnt;
+
+queue<int> shop; // Enter all customer
+queue<int> sofa; //Enter 4 customer seat sofa at a time
+queue<int> chair;//Enter 3 customer seat chair at a time
+queue<int> barbr;// Enter 3 customer seat chair at a time
+queue<int> paymnt;// Enter 1 Customer payment at a time
+
 
 pthread_mutex_t lock1;
 pthread_mutex_t lock2;
@@ -90,7 +92,7 @@ void * customer(void * arg)
     sem_wait(&empty1);
     printf("Enter room customer number %d\n",customer_id);
     cnt++;
-    shop.push(cnt);
+    shop.push(cnt);//Enter all customer
 
     sem_wait(&empty2);
     sleep(1);
